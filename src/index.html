@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form {  padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      .form-group{ padding: 3px;}
+      .flichero{ padding-left:-15px}
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+
+    <script>
+
+        $(function () {
+            var socket = io();
+            var usu = prompt('¿NickName?');
+            socket.emit('usuario', usu);
+
+            $('form').submit(function(e){
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+            
+            socket.on('chat', function(datos){
+                $('#messages').append($('<li>').text(datos.autor+': '+datos.mensajes));
+            });
+
+            socket.on('conectado', function(usuario){
+                $('#messages').append($('<li>').text(usuario+' se ha conectado.'));
+            });
+
+            socket.on('desconectado', function(usuario){
+                $('#messages').append($('<li>').text(usuario+' se ha desconectado.'));
+            });
+
+            socket.on('visualizar escribiendo', function(usuario){
+                $('#lab').text(usuario+' está escribiendo...');
+            });
+
+            socket.on('ocultar escribiendo', function(){
+                $('#lab').text('');
+            });
+
+            var timeout=null;
+            $('form').keypress(function() {
+                socket.emit('escribiendo', usu);
+                if (timeout){
+                    clearTimeout(timeout);
+                }
+
+                timeout=setTimeout(()=>{
+                    socket.emit('no escribiendo', usu);
+                },2000)
+            });
+
+/*
+            var socket = io.connect();
+            var uploader = new SocketIOFileUpload(socket);
+            uploader.listenOnInput(document.getElementById("subirfichero"));
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+  </head>
+  <body>
+    <ul id="usuario"></ul>
+    <ul id="messages"></ul>
+    <form action="" >
+        <div class="form-row">
+            <label id="lab" CLASS="ml-2"></label>
+        </div>
+
+        <div class="form-group pd-l-3 row">
+            <input class="form-control col-10" id="m" autocomplete="off" />
+            <div class="input-group-append col-1 my-0 py-0">
+                <button class="btn btn-outline-secondary flichero" type="file" id="subirfichero">file</button>
+            </div>             
+            <button class="btn btn-primary col-1">Send</button>
+        </div>
+        
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+    </script>
+  </body>
+</html>
