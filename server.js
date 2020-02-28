@@ -30,16 +30,18 @@ app.get('/html', function(req, res){
     res.sendFile(__dirname + '/src/index.html');
 });
 
-app.get('/blas', function(req, res){
-    res.send('<h1>¡¡¡MUERETE!!!</h1>');
-});
 
+
+
+var usuarios = []
 
 io.on('connection', function(socket){
     socket.on('usuario', function(usuario){
         console.log('a user connected');
+        usuarios.push({usu:usuario,conectado:true} );
+
         if (usuario.replace(" ", "") != '' && usuario != null && usuario != undefined){
-            io.emit('conectado', usuario);
+            io.emit('conectado', usuario,usuarios);
 
             socket.on('chat', function(msg){
                 console.log('message: ' + msg);
@@ -88,8 +90,8 @@ io.on('connection', function(socket){
 
 
 
-http.listen(3020, function(){
-  console.log('listening on *:3020');
+http.listen(3080, function(){
+  console.log('listening on *:3080');
 });
 
 
