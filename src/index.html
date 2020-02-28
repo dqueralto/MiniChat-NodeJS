@@ -103,23 +103,23 @@
         <ul id="usuario" class="col-2 border"></ul>
         <ul id="messages" class="col-10 border"></ul>
     </div>
-    <form action="" >
+    
+    <form action=""  >
         <div class="form-row">
-            <label id="lab" CLASS="ml-2"></label>
+            <label id="lab" class="ml-2"></label>
         </div>
     
         <div class="form-group pd-l-3 row">
-            <input class="form-control col-10" id="m" autocomplete="off" />
-            
+            <input class="form-control col-11" id="m" autocomplete="off" />
             <button class="btn btn-primary col-1">Send</button>
         </div>
-    </form>
 
-    <form>
-        <div class="input-group-append col-1 my-0 py-0">
-            <button class="btn btn-outline-secondary flichero" type="file" id="subirfichero">file</button>
+        <div class=" input-group-append row my-0 py-0">
+            <input type="file" class="btn btn-secondary col-11"  value="File">
+            <input class="btn btn-success col-1" onclick="" value="Send">
         </div> 
     </form>
+    
 
     <script src="/socket.io/socket.io.js"></script>
     <script>

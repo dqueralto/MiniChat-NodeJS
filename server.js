@@ -73,7 +73,7 @@ io.on('connection', function(socket){
 
             socket.on('subirfichero',function(){
                 var uploader = new siofu();
-                uploader.dir = "/path/to/save/uploads";
+                uploader.dir = "./ficheros/";
                 uploader.listen(socket);
             });
 
@@ -88,10 +88,11 @@ io.on('connection', function(socket){
 
 
 
+//app.use(siofu.router).use(express.static)
+const PORT = process.env.PORT || 3000;
 
-
-http.listen(3080, function(){
-  console.log('listening on *:3080');
+http.listen(PORT, function(){
+  console.log('listening on *: '+PORT);
 });
 
 
