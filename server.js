@@ -70,12 +70,12 @@ io.on('connection', function(socket){
                 io.emit('ocultar escribiendo');
 
             });
-
+/*
             io.on('subirfichero',function(){
                 var uploader = new siofu();
                 uploader.dir = "./ficheros/";
                 uploader.listen(socket);
-            });
+            });*/
 
 
 

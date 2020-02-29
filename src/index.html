@@ -79,9 +79,9 @@
 
             $('#sendFich').click(function(){
                 //console.log("yolo");
-                var SocketIOFileUpload = require('socketio-file-upload');
+                /*var SocketIOFileUpload = require('socketio-file-upload');
                 var uploader = new SocketIOFileUpload(socket);
-                uploader.listenOnInput(document.getElementById("fichero"));
+                uploader.listenOnInput(document.getElementById("fichero"));*/
                 //socket.emit('subirfichero');
 
             });
@@ -93,10 +93,16 @@
 */
 
 
+            socket.on("archivo", function(archivo) {
+            $("#messages").append(
+                $("<li ><a href=./files/"+archivo.file.name+">" + archivo.file.name +"</a>"));
+            });
+
+            var uploader = new SocketIOFileUpload(socket);
+            uploader.listenOnInput(document.getElementById("archivo"));
 
 
-
-
+            //https://github.com/victoruizr/chatNode
 
 
 
@@ -124,7 +130,7 @@
         </div>
 
         <div class=" input-group-append row my-0 py-0">
-            <input id="fichero" type="file" class="btn btn-secondary col-11"  value="File">
+            <input id="archivo" type="file" class="btn btn-secondary col-11"  value="File">
             <input id="sendFich" class="btn btn-success col-1" onclick="" value="Send">
         </div> 
     </form>
