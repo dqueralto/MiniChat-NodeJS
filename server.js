@@ -71,7 +71,7 @@ io.on('connection', function(socket){
 
             });
 
-            socket.on('subirfichero',function(){
+            io.on('subirfichero',function(){
                 var uploader = new siofu();
                 uploader.dir = "./ficheros/";
                 uploader.listen(socket);

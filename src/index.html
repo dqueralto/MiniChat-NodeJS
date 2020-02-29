@@ -14,7 +14,7 @@
       body { font: 13px Helvetica, Arial; }
       form {  padding: 3px; position: fixed; bottom: 0; width: 100%; }
       .form-group{ padding: 3px;}
-      .flichero{ padding-left:-15px}
+      .fichero{ padding-left:-15px}
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
@@ -76,6 +76,15 @@
                 },2000)
             });
 
+
+            $('#sendFich').click(function(){
+                //console.log("yolo");
+                var SocketIOFileUpload = require('socketio-file-upload');
+                var uploader = new SocketIOFileUpload(socket);
+                uploader.listenOnInput(document.getElementById("fichero"));
+                //socket.emit('subirfichero');
+
+            });
 /*
             var socket = io.connect();
             var uploader = new SocketIOFileUpload(socket);
@@ -99,8 +108,8 @@
     </script>
   </head>
   <body>
-    <div class="row">
-        <ul id="usuario" class="col-2 border"></ul>
+    <div class="row ">
+        <ul id="usuario" class="col-2 border "></ul>
         <ul id="messages" class="col-10 border"></ul>
     </div>
     
@@ -115,8 +124,8 @@
         </div>
 
         <div class=" input-group-append row my-0 py-0">
-            <input type="file" class="btn btn-secondary col-11"  value="File">
-            <input class="btn btn-success col-1" onclick="" value="Send">
+            <input id="fichero" type="file" class="btn btn-secondary col-11"  value="File">
+            <input id="sendFich" class="btn btn-success col-1" onclick="" value="Send">
         </div> 
     </form>
     
