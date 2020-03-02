@@ -8,7 +8,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-   
+    <script src="/siofu/client.js"></script>
+
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -79,10 +80,22 @@
 
             $('#sendFich').click(function(){
                 //console.log("yolo");
-                /*var SocketIOFileUpload = require('socketio-file-upload');
+                //var SocketIOFileUpload = require('socketio-file-upload');
+                /*
                 var uploader = new SocketIOFileUpload(socket);
-                uploader.listenOnInput(document.getElementById("fichero"));*/
+                uploader.listenOnInput(document.getElementById("fichero"))
+                ;*/
                 //socket.emit('subirfichero');
+                
+                /*
+                socket.on("archivo", function(archivo) {
+                    $("#messages").append(
+                        $("<li ><a href=./files/"+archivo.file.name+">" + archivo.file.name +"</a>"));
+                    });
+                */
+
+                var uploader = new SocketIOFileUpload(socket);
+                uploader.listenOnInput(document.getElementById("archivo"));
 
             });
 /*
@@ -91,24 +104,7 @@
             uploader.listenOnInput(document.getElementById("subirfichero"));
 
 */
-
-
-            socket.on("archivo", function(archivo) {
-            $("#messages").append(
-                $("<li ><a href=./files/"+archivo.file.name+">" + archivo.file.name +"</a>"));
-            });
-
-            var uploader = new SocketIOFileUpload(socket);
-            uploader.listenOnInput(document.getElementById("archivo"));
-
-
             //https://github.com/victoruizr/chatNode
-
-
-
-
-
-
 
         });
     </script>

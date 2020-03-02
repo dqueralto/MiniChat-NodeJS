@@ -17,23 +17,29 @@ server.listen(port, hostname, () => {
 var express = require('express');
 
 var app = express();
-app.use('/public', express.static(__dirname + '/public'))
+//app.use('/public', express.static(__dirname + '/public'))
 
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-
-app.get('/', function(req, res){
-  res.send('Hello world');
-});
-
-app.get('/html', function(req, res){
-    res.sendFile(__dirname + '/src/index.html');
-});
-
-
-
+var sioufu = require('socketio-file-upload');
+app.use(sioufu.router).use(express.static(__dirname+'/public/'))
 
 var usuarios = []
+
+
+
+
+
+
+
+
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/public/index.html');
+});
+
+
+
 
 io.on('connection', function(socket){
     socket.on('usuario', function(usuario){
@@ -89,7 +95,7 @@ io.on('connection', function(socket){
 
 
 //app.use(siofu.router).use(express.static)
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 
 http.listen(PORT, function(){
   console.log('listening on *: '+PORT);
